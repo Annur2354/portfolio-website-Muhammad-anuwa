@@ -486,17 +486,17 @@ CREATE TABLE IF NOT EXISTS public.messages (
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 
 -- Allow public to insert messages (for Contact Form)
-DO  
+DO $$
 BEGIN 
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'messages' AND policyname = 'Public Insert Messages') THEN 
         CREATE POLICY "Public Insert Messages" ON public.messages FOR INSERT WITH CHECK (true); 
     END IF; 
-END ;
+END $$;
 
 -- Allow authenticated users (admin) to view/manage messages
-DO  
+DO $$
 BEGIN 
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'messages' AND policyname = 'Auth Manage Messages') THEN 
         CREATE POLICY "Auth Manage Messages" ON public.messages USING (auth.role() = 'authenticated'); 
     END IF; 
-END ;
+END $$;
