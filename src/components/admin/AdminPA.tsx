@@ -403,9 +403,11 @@ export function AdminPA() {
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="from-primary to-coral">ชมพู-ส้ม</SelectItem>
-                                            <SelectItem value="from-secondary to-mint">เขียว-มิ้นท์</SelectItem>
-                                            <SelectItem value="from-accent to-peach">ม่วง-พีช</SelectItem>
+                                            <SelectItem value="from-pink-500 to-rose-400">ชมพู-โรส (Pink)</SelectItem>
+                                            <SelectItem value="from-emerald-400 to-teal-400">เขียว-มิ้นท์ (Teal)</SelectItem>
+                                            <SelectItem value="from-orange-400 to-amber-400">ส้ม-เหลือง (Orange)</SelectItem>
+                                            <SelectItem value="from-blue-600 to-cyan-500">น้ำเงิน-ฟ้า (Blue)</SelectItem>
+                                            <SelectItem value="from-purple-600 to-pink-500">ม่วง-ชมพู (Purple)</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -433,7 +435,7 @@ export function AdminPA() {
                             >
                                 <div className="flex items-start justify-between gap-2">
                                     <div className="flex items-start gap-2">
-                                        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center flex-shrink-0`}>
+                                        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center flex-shrink-0 shadow-sm`}>
                                             <IconComp className="w-4 h-4 text-white" />
                                         </div>
                                         <span className="text-sm text-foreground leading-relaxed">{cat.title}</span>
