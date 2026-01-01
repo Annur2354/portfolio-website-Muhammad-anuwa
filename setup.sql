@@ -407,3 +407,33 @@ WHERE color_gradient_class NOT IN ('from-secondary to-mint', 'from-lavender to-s
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS facebook_url TEXT;
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS line_url TEXT;
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS google_map_url TEXT;
+
+-- Fix: Add Messages table for Contact Form
+CREATE TABLE IF NOT EXISTS public.messages (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    subject TEXT,
+    message TEXT NOT NULL,
+    read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Enable RLS for messages
+ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
+
+-- Allow public to insert messages (for Contact Form)
+DO  
+BEGIN 
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'messages' AND policyname = 'Public Insert Messages') THEN 
+        CREATE POLICY "Public Insert Messages" ON public.messages FOR INSERT WITH CHECK (true); 
+    END IF; 
+END ;
+
+-- Allow authenticated users (admin) to view/manage messages
+DO  
+BEGIN 
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'messages' AND policyname = 'Auth Manage Messages') THEN 
+        CREATE POLICY "Auth Manage Messages" ON public.messages USING (auth.role() = 'authenticated'); 
+    END IF; 
+END ;
