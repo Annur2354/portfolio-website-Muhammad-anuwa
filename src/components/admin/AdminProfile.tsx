@@ -100,7 +100,7 @@ export function AdminProfile() {
             const { data: { user } } = await supabase.auth.getUser();
 
             // Explicitly map only the fields that exist in the database schema
-            const profileData: Database["public"]["Tables"]["profiles"]["Insert"] = {
+            const profileData: any = {
                 // ... (fields remain same)
                 full_name: profile.full_name || "",
                 position: profile.position,
@@ -108,7 +108,9 @@ export function AdminProfile() {
                 phone: profile.phone,
                 address: profile.address,
                 facebook: profile.facebook,
+                facebook_url: profile.facebook_url,
                 line_id: profile.line_id,
+                line_url: profile.line_url,
                 bio: profile.bio,
                 teaching_philosophy: profile.teaching_philosophy,
                 image_url: profile.image_url,
